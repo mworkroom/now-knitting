@@ -12,7 +12,8 @@
 - Access 앱: `Now Knitting` (`24b45f7f-60ec-422c-8a28-8ac2481ecb58`)
 - 정책: `J only`, Allow Emails J님의 등록 이메일 한 개, 앱 세션 1개월 (`1 month`), 정책 세션은 앱 설정 상속 (2026-10-13 운영 설정 확인)
 - 보호 대상: 해당 Worker의 모든 트래픽. 계정 전체 Worker 정책이나 공개 예외는 없다.
-- 운영 버전 ID: `c2687e9a-9c0c-4fa6-be53-c0a04b184669` (2026-10-05, 왼쪽 선택 영역·상세 진입·조건 뱃지/필터·Preview 바로가기)
+- 기존 수동 배포 버전: `c2687e9a-9c0c-4fa6-be53-c0a04b184669` (2026-10-05, 왼쪽 선택 영역·상세 진입·조건 뱃지/필터·Preview 바로가기)
+- 최초 GitHub 자동 배포 버전: `73b48362-3c5d-4bc1-ac5c-04250d3882ed` (2026-10-24, 커밋 `0f6ec19`, 앱 동작 변경 없음). 이후 운영 버전은 Deployments에서 커밋별로 확인한다.
 - Durable Object: `KnittingCoordinator`, migration `v1`, SQLite namespace `77caa29e05b1400e96b292e1af867bad`
 - `workers.dev` 활성화, preview URL 비활성화
 
@@ -40,7 +41,7 @@
 
 Notion 토큰은 기존 운영 Worker의 runtime Secret을 사용한다. GitHub나 Build variables에 복사하지 않는다. `.dev.vars*`, 비밀 환경 파일, `node_modules/`, `dist/`, 개인 학습 메모·로컬 QA 메모·PSD·임시 CSV는 업로드하지 않는다. `.env.example`과 `.env.demo`는 토큰 없는 데모 모드 예제다. 운영 Access와 Durable Object는 기존 Worker 구성을 유지하며, `preview_urls`는 계속 비활성이다.
 
-빌드 설정 변경 자체는 운영 코드를 교체하지 않는다. 최초 GitHub 푸시 후 자동 배포 결과와 화면·API의 Access 보호를 확인해야 연동 검증이 완료된다. 수동 복구 배포는 기존 `npm run deploy`를 사용한다.
+최초 GitHub 푸시 `0f6ec19`의 Workers Builds `8014fc19-e1fb-4b9c-90fe-40d870578678`가 성공했다. 대시보드에서 새 버전의 Ready 상태와 운영 트래픽 100%를 확인했다. Cloudflare는 Node.js 24.22.1에서 lockfile로 의존성을 설치하고 설정한 빌드·배포 명령을 실행했다. 배포 후 `/`, `/api/state`, JS, CSS, manifest, 아이콘은 모두 비로그인 요청을 기존 Access 로그인으로 302 이동시켰다. 로그인 후 실데이터 화면은 이번 작업에서 확인하지 못했으며, 운영 선택·START/END 기록은 만들지 않았다. 수동 복구 배포는 기존 `npm run deploy`를 사용한다.
 
 공식 안내: [기존 Worker에 Git 연결](https://developers.cloudflare.com/workers/ci-cd/builds/#connect-an-existing-worker), [빌드 설정](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
 
