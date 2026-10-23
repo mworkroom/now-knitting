@@ -1,0 +1,9 @@
+{
+  "id": "/", "name": "Now Knitting", "short_name": "Now Knitting",
+  "description": "Your knitting time, saved in Notion.",
+  "lang": "en", "start_url": "/", "scope": "/", "display": "standalone",
+  "background_color": "#ffffff", "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/icon-512.png?v=20261001-2", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

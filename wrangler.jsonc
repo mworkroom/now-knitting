@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "now-knitting",
+  "account_id": "3345251b69db705496b39fee040d036c",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "directory": "./dist", "binding": "ASSETS", "run_worker_first": ["/api/*"], "not_found_handling": "single-page-application" },
+  "durable_objects": { "bindings": [{ "name": "COORDINATOR", "class_name": "KnittingCoordinator" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["KnittingCoordinator"] }],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "vars": {
+    "PROJECTS_SOURCE_ID": "5138ecac-8835-4f5e-b82a-5d98c756dd3f",
+    "SCHEDULE_VIEW_ID": "243f66af-29b2-80d6-a34a-000c9ac6aa68",
+    "DAILY_LOG_SOURCE_ID": "327010b4-b582-4f08-abb2-440ea77fbcab",
+    "NOTION_VERSION": "2026-03-11"
+  }
+}

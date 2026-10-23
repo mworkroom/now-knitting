@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars*
+.env*
+!.env.example
+!.env.demo
+docs/learning log/
+design-qa.md
+*.psd
+*.tmp.csv
+*.log
+worker-configuration.d.ts
