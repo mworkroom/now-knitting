@@ -38,6 +38,10 @@ h2 { font-size: 30px; line-height: 1.25; overflow-wrap: anywhere; }
 .metrics div + div { border-left: 1px solid var(--line); }
 dt { font-size: 14px; color: #4c5056; margin-bottom: 6px; }
 dd { font-size: 24px; font-weight: 650; margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; line-height: 1.35; }
+.metrics dd { white-space: normal; }
+.metric-part { display: inline-block; white-space: nowrap; }
+.metric-part + .metric-part { margin-left: .25em; }
+.metric-unit { font-size: .7em; margin-left: .1em; }
 .timer-readout { text-align: center; padding: 26px 0 24px; }
 .elapsed { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: clamp(40px, 12vw, 54px); font-weight: 500; letter-spacing: -.04em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .timer-readout p { font-size: 16px; color: var(--muted); margin-top: 8px; }

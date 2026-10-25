@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import type { AppState, Session } from '../shared/model';
 import { ElapsedTimer, Icon, Thumbnail } from './components';
-import { formatProgress, totalTime } from './presentation';
+import { formatProgress, timerMetricParts, totalTime } from './presentation';
 import { FileText, ChevronRight } from 'lucide-react';
 import { PREVIEW_SHORTCUT_URL } from './links';
 
 function localDateTime() {
   const now = new Date();
   return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+}
+
+function MetricValue({ value }: { value: string }) {
+  return <>{timerMetricParts(value).map(part => part.unit ? <span className="metric-part" key={part.unit}>{part.number}<span className="metric-unit">{part.unit}</span></span> : part.number)}</>;
 }
 
 export function Timer({ state, lastEndedSession, busy, disabled, onChoose, onToggle, onDetail }: {
@@ -41,7 +45,7 @@ export function Timer({ state, lastEndedSession, busy, disabled, onChoose, onTog
       <h2><a href={project?.notionUrl ?? state.session?.notionUrl} target="_blank" rel="noreferrer">{project?.name ?? 'Open knitting session'} <Icon name="external" size={22} /></a></h2>
       <p>{project?.progressStatus ?? 'Status unavailable'}</p>
     </div>
-    <dl className="metrics"><div><dt>Progress</dt><dd>{formatProgress(project?.progress)}</dd></div><div><dt>Total time</dt><dd>{totalTime(project?.timeSpent)}</dd></div></dl>
+    <dl className="metrics"><div><dt>Progress</dt><dd><MetricValue value={formatProgress(project?.progress)} /></dd></div><div><dt>Total time</dt><dd aria-label={totalTime(project?.timeSpent)}><MetricValue value={totalTime(project?.timeSpent)} /></dd></div></dl>
     {project ? <div className="timer-tools"><a href={PREVIEW_SHORTCUT_URL} title="Open Preview"><FileText size={20} />Pattern</a><button onClick={() => onDetail(project)}>Project details<ChevronRight size={20} /></button></div> : null}
     <div className="timer-readout"><ElapsedTimer state={state} /><p>{state.session ? validStart ? `Started ${new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(state.session.startAt!))}` : 'Correct the start time in Notion.' : 'Ready when you are'}</p></div>
     <button className="primary-button" disabled={busy || disabled} onClick={event => { if (event.detail <= 1) void toggle(); }} onKeyDown={event => { if (event.repeat) event.preventDefault(); }}>{busy ? 'Saving…' : state.session ? 'END' : 'START'}</button>
